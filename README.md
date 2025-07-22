@@ -1,35 +1,42 @@
-Jumpscare App
+# 👻 Jumpscare App
+
 A desktop application built with Tauri v2 for creating jump scares and controlling system interactions. Features popup windows, cursor manipulation, and audio effects.
-Features
-Jump Scares
 
-Popup windows with fade effects
-Timed display sequences
-Hidden window operation
+## ✨ Features
 
-Cursor Control
+### 🎯 Jump Scares
+- Popup windows with fade effects
+- Timed display sequences  
+- Hidden window operation
 
-Smooth mouse movement with easing
-Screen corner navigation
-Position tracking
+### 🖱️ Cursor Control
+- Smooth mouse movement with easing
+- Screen corner navigation
+- Position tracking
 
-Audio Integration
+### 🔊 Audio Integration
+- Sound effect playback
+- Synchronized audio/visual scares
 
-Sound effect playback
-Synchronized audio/visual scares
+### ⚙️ System Integration
+- Global hotkeys (Ctrl+Alt+P to terminate)
+- Background operation
+- Native Windows API integration
 
-System Integration
+---
 
-Global hotkeys (Ctrl+Alt+P to terminate)
-Background operation
-Native Windows API integration
+## 🚀 Installation
 
-Installation
-bashgit clone [repository]
+```bash
+git clone [repository]
 npm install
 npm run tauri dev
-Usage
-javascript// Trigger popup scare
+```
+
+## 📖 Usage
+
+```javascript
+// Trigger popup scare
 await invoke('toggle_popup_window');
 
 // Move cursor smoothly
@@ -44,17 +51,24 @@ await invoke('cursor_corners');
 
 // Get mouse position
 const pos = await invoke('grab_mouse_position');
-Controls
+```
 
-Ctrl+Alt+P - Force quit application
-F12 - Toggle developer tools
+## ⌨️ Controls
 
-Technical Stack
+| Key Combination | Action |
+|-----------------|--------|
+| `Ctrl + Alt + P` | Force quit application |
+| `F12` | Toggle developer tools |
 
-Backend: Rust with Tauri v2
-Frontend: JavaScript/HTML
-System APIs: Windows API for native functionality
-Features: Global hotkeys, window management, cursor control
+## 🛠️ Technical Stack
 
-Disclaimer
+- **Backend**: Rust with Tauri v2
+- **Frontend**: JavaScript/HTML  
+- **System APIs**: Windows API for native functionality
+- **Features**: Global hotkeys, window management, cursor control
+
+---
+
+## ⚠️ Disclaimer
+
 Intended for educational purposes and harmless pranks with consent. Users are responsible for ethical usage.
