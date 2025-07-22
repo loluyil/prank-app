@@ -1,31 +1,31 @@
-# 👻 Jumpscare App
+# Jumpscare App
 
 A desktop application built with Tauri v2 for creating jump scares and controlling system interactions. Features popup windows, cursor manipulation, and audio effects.
 
-## ✨ Features
+## Features
 
-### 🎯 Jump Scares
+### Jump Scares
 - Popup windows with fade effects
 - Timed display sequences  
 - Hidden window operation
 
-### 🖱️ Cursor Control
+###  Cursor Control
 - Smooth mouse movement with easing
 - Screen corner navigation
 - Position tracking
 
-### 🔊 Audio Integration
+### Audio Integration
 - Sound effect playback
 - Synchronized audio/visual scares
 
-### ⚙️ System Integration
+###  System Integration
 - Global hotkeys (Ctrl+Alt+P to terminate)
 - Background operation
 - Native Windows API integration
 
 ---
 
-## 🚀 Installation
+## Installation
 
 ```bash
 git clone [repository]
@@ -33,7 +33,7 @@ npm install
 npm run tauri dev
 ```
 
-## 📖 Usage
+## Usage
 
 ```javascript
 // Trigger popup scare
@@ -53,14 +53,14 @@ await invoke('cursor_corners');
 const pos = await invoke('grab_mouse_position');
 ```
 
-## ⌨️ Controls
+##  Controls
 
 | Key Combination | Action |
 |-----------------|--------|
 | `Ctrl + Alt + P` | Force quit application |
 | `F12` | Toggle developer tools |
 
-## 🛠️ Technical Stack
+##  Technical Stack
 
 - **Backend**: Rust with Tauri v2
 - **Frontend**: JavaScript/HTML  
@@ -69,6 +69,6 @@ const pos = await invoke('grab_mouse_position');
 
 ---
 
-## ⚠️ Disclaimer
+##  Disclaimer
 
 Intended for educational purposes and harmless pranks with consent. Users are responsible for ethical usage.
