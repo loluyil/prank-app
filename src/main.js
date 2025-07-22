@@ -1,12 +1,8 @@
 const { invoke } = window.__TAURI__.core;
 
-/*
-  Switch statement vs array - random usage, figure which is better
- */
-
 function main() {
   const random = Math.floor(Math.random() * 3);
-  const minutes = [1, 2, 3];
+  const minutes = [10, 15, 30];
   const delay = minutes[random] * 60 * 1000;
 
   setTimeout(() => {

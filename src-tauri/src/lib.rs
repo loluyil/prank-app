@@ -8,6 +8,7 @@ use windows::{
     Win32::Foundation::*, 
     Win32::UI::WindowsAndMessaging::*,
     Win32::UI::Input::KeyboardAndMouse::*,
+    core::PCSTR
 };
 
 #[tauri::command]
@@ -123,6 +124,8 @@ async fn terminate_program(_app: tauri::AppHandle) -> Result<(), String> {
                 
                 if combo_pressed && !was_pressed {
                     println!("Terminating program...");
+                    show_termination_popup();
+                    tokio::time::sleep(tokio::time::Duration::from_secs(1)).await;
                     std::process::exit(0);
                 }
                 
@@ -142,10 +145,12 @@ fn close_app() {
 }
 
 //Helper functions
+#[inline]
 fn lerp(start: f64, end: f64, t: f64) -> f64 {
     start + t * (end - start)
 }
 
+#[inline]
 fn ease_out_cubic(t: f64) -> f64 {
     1.0 - (1.0 - t).powi(3)
 }
@@ -180,17 +185,33 @@ fn fade_window(hwnd: HWND, fade_in: bool, duration_ms: u32, steps: u32) {
     }
 }
 
+fn show_termination_popup() {
+    std::thread::spawn(|| {
+        std::thread::sleep(std::time::Duration::from_millis(800));
+        unsafe {
+            let hwnd = FindWindowA(PCSTR(std::ptr::null()), PCSTR(b"Jumpscare App\0".as_ptr()));
+            if hwnd.0 != 0 {
+                let _ = PostMessageA(hwnd, WM_CLOSE, WPARAM(0), LPARAM(0));
+            }
+        }
+    });
+
+    unsafe {
+        MessageBoxA(
+            HWND(0), 
+            PCSTR(b"Program Terminated\0".as_ptr()),
+            PCSTR(b"Jumpscare App\0".as_ptr()),
+            MB_OK | MB_ICONINFORMATION
+        );
+    }
+}
+
 
 //-----
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     tauri::Builder::default()
-        .setup(|app| {
-            let window = app.get_webview_window("main").unwrap();
-            window.open_devtools();
-            Ok(())
-        })
         .invoke_handler(tauri::generate_handler![
             toggle_popup_window, 
             cursor_move, 
