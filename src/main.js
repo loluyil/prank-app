@@ -167,3 +167,8 @@ async function terminateProgram() {
 terminateProgram();
 
 main();
+
+//Test button
+document.getElementById('test-button').addEventListener('click', () => {
+  popupFunction();
+});

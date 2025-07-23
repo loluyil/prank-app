@@ -212,6 +212,13 @@ fn show_termination_popup() {
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     tauri::Builder::default()
+        .setup(|app| {
+            //To prevent flickering on first popup
+            let image_popup2 = app.get_webview_window("image_popup2").expect("Failed to get image_popup2 window");
+            let hwnd = HWND(image_popup2.hwnd().unwrap().0 as isize);
+            set_opacity(hwnd, 0);
+            Ok(())
+        })
         .invoke_handler(tauri::generate_handler![
             toggle_popup_window, 
             cursor_move, 
