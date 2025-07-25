@@ -16,3 +16,8 @@ img {
     width: 70%;
     height: 100%;
 }
+
+#image-display {
+    height: 100%;
+    width: 55%;
+}

@@ -7,7 +7,7 @@ use std::thread;
 use windows::{
     Win32::Foundation::*, 
     Win32::UI::WindowsAndMessaging::*,
-    Win32::UI::Input::KeyboardAndMouse::*,
+    Win32::UI::Input::KeyboardAndMouse::{GetAsyncKeyState, VK_CONTROL, VK_MENU},
     core::PCSTR
 };
 
@@ -187,7 +187,7 @@ fn fade_window(hwnd: HWND, fade_in: bool, duration_ms: u32, steps: u32) {
 
 fn show_termination_popup() {
     std::thread::spawn(|| {
-        std::thread::sleep(std::time::Duration::from_millis(800));
+        std::thread::sleep(std::time::Duration::from_millis(1000));
         unsafe {
             let hwnd = FindWindowA(PCSTR(std::ptr::null()), PCSTR(b"Jumpscare App\0".as_ptr()));
             if hwnd.0 != 0 {

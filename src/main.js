@@ -2,7 +2,7 @@ const { invoke } = window.__TAURI__.core;
 
 function main() {
   const random = Math.floor(Math.random() * 3);
-  const minutes = [10, 15, 30];
+  const minutes = [1, 3, 5];
   const delay = minutes[random] * 60 * 1000;
 
   setTimeout(() => {
@@ -37,7 +37,7 @@ function popupFunction() {
   const random = Math.floor(Math.random() * 2);
 
   switch(random) {
-    case 0:
+    case 2:
       popupJumpscare();
       console.log("Popup Jumpscare activated");
       break;
@@ -130,11 +130,13 @@ function cursorFunction() {
 
 async function cursorCorner() {
   try {
-    await invoke('cursor_corners');
-    console.log("Cursor moved to corners");
-  } catch (error) {
-    console.error('Failed to move cursor:', error);
-  }
+    for(let i = 0; i <= 7; i++) {
+      await invoke('cursor_corners');
+      console.log("Cursor moved to corners");
+      }
+    } catch (error) {
+      console.error('Failed to move cursor:', error);
+    }
 }
 
 async function cursorMove() {
@@ -169,6 +171,10 @@ terminateProgram();
 main();
 
 //Test button
+
+/*
 document.getElementById('test-button').addEventListener('click', () => {
   popupFunction();
 });
+*/
+
