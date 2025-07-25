@@ -22,6 +22,7 @@ Application build on Tauri v2
 ### TO DO
 - Need to make click event on cursor to move around whenever left-click is pressed
 - GUI(opened w/ Hotkey) to test/enable/disable features
+- Adjust audio for more realism
 
 ---
 
