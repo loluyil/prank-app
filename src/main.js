@@ -2,7 +2,7 @@ const { invoke } = window.__TAURI__.core;
 
 function main() {
   const random = Math.floor(Math.random() * 3);
-  const minutes = [1, 2, 3];
+  const minutes = [0.5, 1, 2];
   const delay = minutes[random] * 60 * 1000;
 
   setTimeout(() => {
