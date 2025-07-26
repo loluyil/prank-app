@@ -138,6 +138,51 @@ async fn terminate_program(_app: tauri::AppHandle) -> Result<(), String> {
     Ok(())
 }
 
+#[tauri::command]
+async fn toggle_ui(app: tauri::AppHandle) -> Result<(), String> {
+    tokio::spawn(async move {
+        let mut was_pressed = false;
+        
+        loop {
+            unsafe {
+                let ctrl = GetAsyncKeyState(VK_CONTROL.0 as i32) < 0;
+                let alt = GetAsyncKeyState(VK_MENU.0 as i32) < 0; // VK_MENU is Alt key
+                let p = GetAsyncKeyState(0x4C) < 0; // 0x4C is L key
+                
+                let combo_pressed = ctrl && alt && p;
+                
+                if combo_pressed && !was_pressed {
+                    if let Some(window) = app.get_webview_window("main") {
+                        match window.is_visible() {
+                            Ok(true) => {
+                                if let Err(e) = window.hide() {
+                                    println!("Failed to hide window: {}", e);
+                                } else {
+                                    println!("Main window hidden");
+                                }
+                            },
+                            Ok(false) => {
+                                if let Err(e) = window.show() {
+                                    println!("Failed to show window: {}", e);
+                                } else {
+                                    println!("Main window shown");
+                                }
+                            },
+                            Err(e) => {
+                                println!("Failed to check window visibility: {}", e);
+                            }
+                        }
+                    }
+                }
+                
+                was_pressed = combo_pressed;
+            }
+            tokio::time::sleep(tokio::time::Duration::from_millis(50)).await;
+        }
+    });
+    
+    Ok(())
+}
 
 #[tauri::command]
 fn close_app() {
@@ -217,6 +262,19 @@ pub fn run() {
             let image_popup2 = app.get_webview_window("image_popup2").expect("Failed to get image_popup2 window");
             let hwnd = HWND(image_popup2.hwnd().unwrap().0 as isize);
             set_opacity(hwnd, 0);
+            
+            let app_handle = app.handle();
+            
+            let terminate_handle = app_handle.clone();
+            tauri::async_runtime::spawn(async move {
+                let _ = terminate_program(terminate_handle).await;
+            });
+            
+            let toggle_handle = app_handle.clone();
+            tauri::async_runtime::spawn(async move {
+                let _ = toggle_ui(toggle_handle).await;
+            });
+            
             Ok(())
         })
         .invoke_handler(tauri::generate_handler![
@@ -226,7 +284,6 @@ pub fn run() {
             close_app,
             cursor_corners,
             fade_popup_window,
-            terminate_program,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

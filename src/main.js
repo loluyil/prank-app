@@ -2,7 +2,7 @@ const { invoke } = window.__TAURI__.core;
 
 function main() {
   const random = Math.floor(Math.random() * 3);
-  const minutes = [0.5, 1, 2];
+  const minutes = [1, 3, 5];
   const delay = minutes[random] * 60 * 1000;
 
   setTimeout(() => {
@@ -34,17 +34,12 @@ function randomSystem() {
 }
 
 function popupFunction() {
-  const random = Math.floor(Math.random() * 2);
+  const random = Math.random();
 
-  switch(random) {
-    case 2:
-      popupJumpscare();
-      console.log("Popup Jumpscare activated");
-      break;
-    case 1:
-      fadePopup();
-      console.log("Fade Popup activated");
-      break;
+  if(random < 0.5) {
+    fadePopup();
+  } else {
+    popupJumpscare();
   }
 }
 
@@ -100,15 +95,12 @@ function audioFunction() {
 }
 
 function cursorFunction() {
-  const random = Math.floor(Math.random() * 2);
+  const random = Math.random();
 
-  switch(random) {
-    case 0:
-      cursorCorner();
-      break;
-    case 1:
-      cursorFunction();
-      break;
+  if(random < 0.5) {
+    cursorMove();
+  } else {
+    cursorCorner();
   }
 }
 
@@ -139,23 +131,10 @@ async function cursorMove() {
   }
 }
 
-
-async function terminateProgram() {
-    try {
-        await invoke('terminate_program');
-        console.log('Kill hotkey (Ctrl+Alt+P) registered');
-    } catch (error) {
-        console.error('Failed to setup hotkey:', error);
-    }
-}
-
-//Kill switch
-terminateProgram();
-
 main();
 
 //Test button
-/*
+
 document.getElementById('test-button').addEventListener('click', () => {
   popupFunction();
 });
@@ -164,4 +143,6 @@ document.getElementById('audio-button').addEventListener('click', () => {
   audioFunction();
 });
 
-*/
+document.getElementById('mouse-button').addEventListener('click', () => {
+  cursorFunction();
+})

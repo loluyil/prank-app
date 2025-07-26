@@ -12,9 +12,9 @@
       {
         "title": "8====D",
         "label": "main",
-        "width": 1,
-        "height": 1,
-        "visible": false,
+        "width": 200,
+        "height": 200,
+        "visible": true,
         "fullscreen": false,
         "resizable": false
       },
