@@ -60,8 +60,13 @@ function fadePopup() {
   try {
     const audio = new Audio('amongus.mp3');
     audio.volume = 0.25;
+    
+    //fixes audio sync on production
+    audio.addEventListener('playing', () => {
+      invoke('fade_popup_window');
+    });
+    
     audio.play();
-    invoke('fade_popup_window');
   } catch (error) {
     console.error('Failed to toggle window:', error);
   }
