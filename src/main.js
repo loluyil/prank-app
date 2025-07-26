@@ -2,7 +2,7 @@ const { invoke } = window.__TAURI__.core;
 
 function main() {
   const random = Math.floor(Math.random() * 3);
-  const minutes = [1, 3, 5];
+  const minutes = [1, 2, 3];
   const delay = minutes[random] * 60 * 1000;
 
   setTimeout(() => {
@@ -73,45 +73,29 @@ function fadePopup() {
 }
 
 function audioFunction() {
-  const random = Math.floor(Math.random() * 4);
+  const random = Math.floor(Math.random() * 3);
   let audio;
 
   switch(random) {
     case 0:
       audio = new Audio('discord-notif.mp3');
-      audio.play();
       console.log("Number:" + random);
       break;
     case 1:
       audio = new Audio('knock.mp3');
-      audio.play();
       console.log("Number:" + random);
       break;
     case 2:
       audio = new Audio('iphone-notification.mp3');
-      audio.play();
-      console.log("Number:" + random);
-      break;
-    case 3:
-      spamAudio();
       console.log("Number:" + random);
       break;
   }
-}
 
-function spamAudio() {
-  const sounds = [
-    'discord-notif.mp3',
-    'iphone-notification.mp3', 
-    'knock.mp3',
-  ];
-  
-  for(let i = 0; i < 15; i++) {
-    let time = 2000;
-    setTimeout(() => {
-      const random = sounds[Math.floor(Math.random() * sounds.length)];
-      new Audio(random).play();
-    }, Math.random() * time);
+  if (audio) {
+    audio.volume = 0.5;
+    audio.play();
+    console.log("Number:" + random);
+    console.log("Volume =" + audio.volume);
   }
 }
 
@@ -171,10 +155,13 @@ terminateProgram();
 main();
 
 //Test button
-
 /*
 document.getElementById('test-button').addEventListener('click', () => {
   popupFunction();
 });
-*/
 
+document.getElementById('audio-button').addEventListener('click', () => {
+  audioFunction();
+});
+
+*/
