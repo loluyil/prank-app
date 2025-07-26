@@ -19,7 +19,8 @@ tauri-build = { version = "2", default-features = false, features = [] }
 
 [dependencies]
 tauri = { version = "2", default-features = false, features = [
-    "wry"
+    "wry",
+    "devtools"
 ] }
 tauri-plugin-opener = "2"
 serde = { version = "1", default-features = false, features = ["derive"] }
