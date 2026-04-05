@@ -7,7 +7,10 @@ use std::thread;
 use windows::{
     Win32::Foundation::*, 
     Win32::UI::WindowsAndMessaging::*,
-    Win32::UI::Input::KeyboardAndMouse::{GetAsyncKeyState, VK_CONTROL, VK_MENU},
+    Win32::UI::Input::KeyboardAndMouse::{
+        GetAsyncKeyState, mouse_event, MOUSE_EVENT_FLAGS, MOUSEEVENTF_LEFTDOWN,
+        MOUSEEVENTF_LEFTUP, VK_CONTROL, VK_MENU,
+    },
     core::PCSTR
 };
 
@@ -96,14 +99,11 @@ fn cursor_corners() -> Result<(), String> {
         (width - 10, height - 20), //3 - Bottomright
     ];
 
-    mouse.move_to(corners[0].0, corners[0].1).map_err(|e| e.to_string())?;
-    thread::sleep(Duration::from_millis(150));
-    mouse.move_to(corners[1].0, corners[1].1).map_err(|e| e.to_string())?;
-    thread::sleep(Duration::from_millis(150));
-    mouse.move_to(corners[2].0, corners[2].1).map_err(|e| e.to_string())?;
-    thread::sleep(Duration::from_millis(150));
-    mouse.move_to(corners[3].0, corners[3].1).map_err(|e| e.to_string())?;
-    thread::sleep(Duration::from_millis(150));
+    for (x, y) in corners {
+        mouse.move_to(x, y).map_err(|e| e.to_string())?;
+        left_click();
+        thread::sleep(Duration::from_millis(150));
+    }
 
     
     Ok(())
@@ -287,4 +287,12 @@ pub fn run() {
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
+}
+
+fn left_click() {
+    unsafe {
+        mouse_event(MOUSE_EVENT_FLAGS(MOUSEEVENTF_LEFTDOWN.0), 0, 0, 0, 0);
+        thread::sleep(std::time::Duration::from_millis(30));
+        mouse_event(MOUSE_EVENT_FLAGS(MOUSEEVENTF_LEFTUP.0), 0, 0, 0, 0);
+    }
 }
